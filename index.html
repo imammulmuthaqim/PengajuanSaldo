@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DanaPengajuan - Saldo Digital Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f2f3f5 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e60000;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #e60000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Styles */
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border: 1px solid #f0f0f0;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: #666;
+            font-weight: 400;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #e60000;
+            box-shadow: 0 0 0 3px rgba(230, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e60000 0%, #cc0000 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(230, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f2f3f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e1e5e9;
+        }
+
+        .btn-copy {
+            background: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .btn-copy:hover {
+            background: #218838;
+        }
+
+        /* Saldo Display */
+        .saldo-display {
+            margin-bottom: 2rem;
+        }
+
+        .saldo-box {
+            background: linear-gradient(135deg, #e60000 0%, #cc0000 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(230, 0, 0, 0.3);
+        }
+
+        .saldo-box i {
+            margin-right: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        /* Bank Selection */
+        .bank-selection {
+            margin-bottom: 1rem;
+        }
+
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .bank-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .bank-option:hover {
+            border-color: #e60000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(230, 0, 0, 0.2);
+        }
+
+        .bank-option.selected {
+            border-color: #e60000;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+        }
+
+        .bank-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .bank-option span {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #e60000;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #e60000;
+        }
+
+        /* Account Info */
+        .account-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e1e5e9;
+            transition: all 0.3s ease;
+        }
+
+        .account-card:hover {
+            border-color: #e60000;
+            transform: translateY(-2px);
+        }
+
+        .account-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: #1e1e1e;
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .admin-panel .card {
+            background: #2d2d2d;
+            color: white;
+        }
+
+        .admin-panel .form-control {
+            background: #3d3d3d;
+            border-color: #555;
+            color: white;
+        }
+
+        .admin-panel .form-control:focus {
+            border-color: #e60000;
+        }
+
+        /* Transaction List */
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #e60000;
+        }
+
+        .admin-panel .transaction-item {
+            background: #3d3d3d;
+            color: white;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .status-proses { background: #ffc107; color: #000; }
+        .status-lunas { background: #28a745; color: white; }
+        .status-belum-bayar { background: #dc3545; color: white; }
+        .status-tolak { background: #6c757d; color: white; }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e60000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .account-info {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* QR Code Container */
+        .qr-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .qr-code {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">DanaPengajuan</a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="nav-item active" data-section="pengajuan">
+                            <i class="fas fa-money-bill-wave"></i> Pengajuan
+                        </li>
+                        <li class="nav-item" data-section="tagihan">
+                            <i class="fas fa-receipt"></i> Cek Tagihan
+                        </li>
+                        <li class="nav-item" data-section="rekening">
+                            <i class="fas fa-university"></i> Rekening
+                        </li>
+                        <li class="nav-item" data-section="admin">
+                            <i class="fas fa-cog"></i> Admin
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Pengajuan Saldo Section -->
+            <section id="pengajuan" class="section active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Pengajuan Saldo Digital</h2>
+                        <p class="card-subtitle">Ajukan saldo dengan mudah dan cepat</p>
+                    </div>
+                    
+                    <!-- Saldo Display -->
+                    <div class="saldo-display">
+                        <div class="saldo-box">
+                            <i class="fas fa-wallet"></i>
+                            <span>Saldo Tersedia: </span>
+                            <span id="saldoTersedia">Rp 0</span>
+                        </div>
+                    </div>
+                    
+                    <form id="pengajuanForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-phone"></i> No. HP
+                                </label>
+                                <input type="tel" id="noHp" class="form-control" placeholder="08xxxxxxxxxx" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-user"></i> Nama (Otomatis)
+                                </label>
+                                <input type="text" id="nama" class="form-control" placeholder="Nama akan muncul otomatis" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-money-bill"></i> Nominal Saldo
+                                </label>
+                                <input type="number" id="nominal" class="form-control" placeholder="25000" min="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-credit-card"></i> Pilih Bank
+                                </label>
+                                <div class="bank-selection">
+                                    <input type="hidden" id="bank" required>
+                                    <div class="bank-grid">
+                                        <div class="bank-option" data-bank="Dana">
+                                            <img src="Dana.png" alt="Dana" class="bank-logo">
+                                            <span>Dana</span>
+                                        </div>
+                                        <div class="bank-option" data-bank="OVO">
+                                            <img src="Ovo.png" alt="OVO" class="bank-logo">
+                                            <span>OVO</span>
+                                        </div>
+                                        <div class="bank-option" data-bank="Gopay">
+                                            <img src="Gopay.png" alt="Gopay" class="bank-logo">
+                                            <span>Gopay</span>
+                                        </div>
+                                        <div class="bank-option" data-bank="SeaBank">
+                                            <img src="Seabank.png" alt="SeaBank" class="bank-logo">
+                                            <span>SeaBank</span>
+                                        </div>
+                                        <div class="bank-option" data-bank="Pulsa">
+                                            <img src="Pulsa.png" alt="Pulsa" class="bank-logo">
+                                            <span>Pulsa</span>
+                                        </div>
+                                        <div class="bank-option" data-bank="Kuota">
+                                            <img src="Kuota.png" alt="Kuota" class="bank-logo">
+                                            <span>Kuota</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-calendar"></i> Jatuh Tempo (Hari)
+                                </label>
+                                <select id="jatuhTempo" class="form-control" required>
+                                    <option value="">Pilih Waktu</option>
+                                    <option value="3">3 Hari (Free)</option>
+                                    <option value="5">5 Hari (+Rp 2.000)</option>
+                                    <option value="7">7 Hari (+Rp 4.000)</option>
+                                    <option value="10">10 Hari (+Rp 5.000)</option>
+                                    <option value="12">12 Hari (+Rp 5.500)</option>
+                                    <option value="15">15 Hari (+Rp 6.000)</option>
+                                    <option value="17">17 Hari (+Rp 7.000)</option>
+                                    <option value="20">20 Hari (+Rp 8.000)</option>
+                                    <option value="22">22 Hari (+Rp 10.000)</option>
+                                    <option value="25">25 Hari (+Rp 12.000)</option>
+                                    <option value="28">28 Hari (+Rp 14.000)</option>
+                                    <option value="30">30 Hari (+Rp 15.000)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-tag"></i> Kode Promo (Opsional)
+                                </label>
+                                <input type="text" id="kodePromo" class="form-control" placeholder="Masukkan kode promo">
+                            </div>
+                        </div>
+
+                        <div id="summary" class="summary-box" style="display: none;">
+                            <h4 style="margin-bottom: 1rem; color: #e60000;">
+                                <i class="fas fa-file-invoice"></i> Ringkasan Pengajuan
+                            </h4>
+                            <div class="summary-item">
+                                <span>Nama:</span>
+                                <span id="summaryNama">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>No. HP:</span>
+                                <span id="summaryHp">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Nominal:</span>
+                                <span id="summaryNominal">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Bank:</span>
+                                <span id="summaryBank">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Fee Waktu:</span>
+                                <span id="summaryFeeWaktu">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Fee Admin:</span>
+                                <span id="summaryFeeAdmin">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Kode Promo:</span>
+                                <span id="summaryPromo">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span><strong>Total Bayar:</strong></span>
+                                <span id="summaryTotal"><strong>-</strong></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Kirim Pengajuan
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Cek Tagihan Section -->
+            <section id="tagihan" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Cek Tagihan</h2>
+                        <p class="card-subtitle">Masukkan nomor HP untuk melihat histori tagihan</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-phone"></i> No. HP
+                        </label>
+                        <div style="display: flex; gap: 1rem;">
+                            <input type="tel" id="cekHp" class="form-control" placeholder="08xxxxxxxxxx">
+                            <button type="button" id="btnCekTagihan" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Cek
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="loading" id="tagihanLoading">
+                        <div class="spinner"></div>
+                        <p>Mencari data tagihan...</p>
+                    </div>
+
+                    <div id="tagihanResult" class="transaction-list"></div>
+                </div>
+            </section>
+
+            <!-- Rekening Admin Section -->
+            <section id="rekening" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Rekening Admin</h2>
+                        <p class="card-subtitle">Informasi rekening untuk pembayaran</p>
+                    </div>
+
+                    <div class="qr-container">
+                        <h4 style="margin-bottom: 1rem;">
+                            <i class="fas fa-qrcode"></i> QRIS
+                        </h4>
+                        <img src="https://images.pexels.com/photos/8142178/pexels-photo-8142178.jpeg?auto=compress&cs=tinysrgb&w=300" 
+                             alt="QRIS Code" class="qr-code">
+                        <p style="margin-top: 1rem; color: #666;">Scan QR Code untuk pembayaran</p>
+                    </div>
+
+                    <div class="account-card">
+                        <div class="account-info">
+                            <div>
+                                <h4 style="color: #e60000; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-wallet"></i> DANA
+                                </h4>
+                                <p><strong>Nama:</strong> IMAM MULMUTHAQIM</p>
+                                <p><strong>No. HP:</strong> 089515199789</p>
+                            </div>
+                            <button class="btn btn-copy" onclick="copyToClipboard('089515199789', 'Dana')">
+                                <i class="fas fa-copy"></i> Salin
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="account-card">
+                        <div class="account-info">
+                            <div>
+                                <h4 style="color: #e60000; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-university"></i> SEABANK
+                                </h4>
+                                <p><strong>Nama:</strong> IMAM MULMUTHAQIM</p>
+                                <p><strong>No. Rekening:</strong> 901977485638</p>
+                            </div>
+                            <button class="btn btn-copy" onclick="copyToClipboard('901977485638', 'SeaBank')">
+                                <i class="fas fa-copy"></i> Salin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Panel Section -->
+            <section id="admin" class="section">
+                <div id="adminLogin" class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Login Admin</h2>
+                        <p class="card-subtitle">Masukkan password untuk mengakses panel admin</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" id="adminPassword" class="form-control" placeholder="Masukkan password">
+                    </div>
+
+                    <button type="button" id="btnLogin" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+
+                <div id="adminPanel" class="admin-panel hidden">
+                    <div class="card-header" style="text-align: center; margin-bottom: 2rem;">
+                        <h2 class="card-title" style="color: white;">Panel Admin</h2>
+                        <p style="color: #ccc;">Kelola transaksi dan pengguna</p>
+                    </div>
+
+                    <!-- Summary Stats -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                        <div class="card">
+                            <h4 style="color: #e60000; margin-bottom: 0.5rem;">
+                                <i class="fas fa-money-bill-wave"></i> Total Pengajuan
+                            </h4>
+                            <p id="totalPengajuan" style="font-size: 1.5rem; font-weight: 700;">Rp 0</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: #e60000; margin-bottom: 0.5rem;">
+                                <i class="fas fa-chart-line"></i> Total Fee
+                            </h4>
+                            <p id="totalFee" style="font-size: 1.5rem; font-weight: 700;">Rp 0</p>
+                        </div>
+                    </div>
+
+                    <!-- Add User Contact -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem; color: white;">
+                            <i class="fas fa-user-plus"></i> Tambah Kontak User
+                        </h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="newUserName" class="form-control" placeholder="Nama lengkap">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="newUserHp" class="form-control" placeholder="No. HP">
+                            </div>
+                        </div>
+                        <button type="button" id="btnAddUser" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Simpan Kontak
+                        </button>
+                    </div>
+
+                    <!-- Saldo Management -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem; color: white;">
+                            <i class="fas fa-wallet"></i> Kelola Saldo
+                        </h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label style="color: white; margin-bottom: 0.5rem; display: block;">Saldo Saat Ini</label>
+                                <input type="number" id="currentSaldo" class="form-control" placeholder="0" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: white; margin-bottom: 0.5rem; display: block;">Update Saldo</label>
+                                <input type="number" id="newSaldo" class="form-control" placeholder="Masukkan saldo baru">
+                            </div>
+                        </div>
+                        <button type="button" id="btnUpdateSaldo" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Saldo
+                        </button>
+                    </div>
+
+                    <!-- Transaction Filter -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem; color: white;">
+                            <i class="fas fa-filter"></i> Filter Transaksi
+                        </h4>
+                        <select id="statusFilter" class="form-control">
+                            <option value="">Semua Status</option>
+                            <option value="proses">Proses</option>
+                            <option value="belum-bayar">Belum Bayar</option>
+                            <option value="lunas">Lunas</option>
+                            <option value="tolak">Tolak</option>
+                        </select>
+                    </div>
+
+                    <!-- Transactions List -->
+                    <div class="card">
+                        <h4 style="margin-bottom: 1rem; color: white;">
+                            <i class="fas fa-list"></i> Daftar Transaksi
+                        </h4>
+                        <div class="loading" id="adminLoading">
+                            <div class="spinner"></div>
+                            <p style="color: white;">Memuat data transaksi...</p>
+                        </div>
+                        <div id="adminTransactionList" class="transaction-list"></div>
+                    </div>
+
+                    <button type="button" id="btnLogout" class="btn btn-secondary" style="width: 100%; margin-top: 2rem;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getDatabase, ref, set, get, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHqg6LY-Vr3DsfNrMA9gwTyl0xi7jiQWc",
+            authDomain: "danapengajuan-3fe67.firebaseapp.com",
+            databaseURL: "https://danapengajuan-3fe67-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "danapengajuan-3fe67",
+            storageBucket: "danapengajuan-3fe67.appspot.com",
+            messagingSenderId: "231562139072",
+            appId: "1:231562139072:web:ef64922c3d4b5d1fe92425"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const rtdb = getDatabase(app);
+
+        // Global Variables
+        let isAdminLoggedIn = false;
+        let currentTransactions = [];
+        let currentSaldo = 0;
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const sectionId = this.dataset.section;
+                
+                // Update active nav
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show section
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Load admin data if accessing admin panel
+                if (sectionId === 'admin' && isAdminLoggedIn) {
+                    loadAdminData();
+                }
+                
+                // Load saldo when accessing pengajuan
+                if (sectionId === 'pengajuan') {
+                    loadSaldo();
+                }
+            });
+        });
+
+        // Bank Selection
+        document.querySelectorAll('.bank-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.bank-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Set hidden input value
+                document.getElementById('bank').value = this.dataset.bank;
+                
+                // Update summary
+                updateSummary();
+            });
+        });
+
+        // Load Saldo
+        async function loadSaldo() {
+            try {
+                const saldoRef = ref(rtdb, 'admin_data/saldo');
+                const snapshot = await get(saldoRef);
+                currentSaldo = snapshot.exists() ? snapshot.val() : 0;
+                document.getElementById('saldoTersedia').textContent = formatCurrency(currentSaldo);
+            } catch (error) {
+                console.error('Error loading saldo:', error);
+                document.getElementById('saldoTersedia').textContent = 'Error loading';
+            }
+        }
+
+        // Fee Calculator
+        function calculateFees(nominal, jatuhTempo) {
+            const feeWaktu = {
+                3: 0, 5: 2000, 7: 4000, 10: 5000, 12: 5500,
+                15: 6000, 17: 7000, 20: 8000, 22: 10000,
+                25: 12000, 28: 14000, 30: 15000
+            };
+
+            const feeAdmin = nominal < 25000 ? 3000 : 5000;
+            const feeWaktuAmount = feeWaktu[jatuhTempo] || 0;
+
+            return { feeAdmin, feeWaktuAmount };
+        }
+
+        // Format Currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Auto-fill name based on phone number
+        document.getElementById('noHp').addEventListener('input', async function() {
+            const hp = this.value.trim();
+            if (hp.length >= 10) {
+                try {
+                    const userRef = ref(rtdb, `kontak_user/${hp}`);
+                    const snapshot = await get(userRef);
+                    if (snapshot.exists()) {
+                        document.getElementById('nama').value = snapshot.val().nama;
+                    } else {
+                        document.getElementById('nama').value = '';
+                    }
+                } catch (error) {
+                    console.error('Error fetching user:', error);
+                }
+            }
+        });
+
+        // Update summary when form changes
+        function updateSummary() {
+            const nominal = parseInt(document.getElementById('nominal').value) || 0;
+            const jatuhTempo = parseInt(document.getElementById('jatuhTempo').value) || 0;
+            const nama = document.getElementById('nama').value;
+            const hp = document.getElementById('noHp').value;
+            const bank = document.getElementById('bank').value;
+            const kodePromo = document.getElementById('kodePromo').value || '-';
+
+            if (nominal > 0 && jatuhTempo > 0) {
+                const { feeAdmin, feeWaktuAmount } = calculateFees(nominal, jatuhTempo);
+                const total = nominal + feeAdmin + feeWaktuAmount;
+
+                document.getElementById('summaryNama').textContent = nama || '-';
+                document.getElementById('summaryHp').textContent = hp;
+                document.getElementById('summaryNominal').textContent = formatCurrency(nominal);
+                document.getElementById('summaryBank').textContent = bank;
+                document.getElementById('summaryFeeWaktu').textContent = formatCurrency(feeWaktuAmount);
+                document.getElementById('summaryFeeAdmin').textContent = formatCurrency(feeAdmin);
+                document.getElementById('summaryPromo').textContent = kodePromo;
+                document.getElementById('summaryTotal').textContent = formatCurrency(total);
+
+                document.getElementById('summary').style.display = 'block';
+            } else {
+                document.getElementById('summary').style.display = 'none';
+            }
+        }
+
+        // Add event listeners for form updates
+        ['nominal', 'jatuhTempo', 'nama', 'noHp', 'bank', 'kodePromo'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateSummary);
+            document.getElementById(id).addEventListener('change', updateSummary);
+        });
+
+        // Form Submission
+        document.getElementById('pengajuanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                nama: document.getElementById('nama').value,
+                noHp: document.getElementById('noHp').value,
+                nominal: parseInt(document.getElementById('nominal').value),
+                bank: document.getElementById('bank').value,
+                jatuhTempo: parseInt(document.getElementById('jatuhTempo').value),
+                kodePromo: document.getElementById('kodePromo').value || '-',
+                timestamp: Date.now(),
+                status: 'proses'
+            };
+
+            // Validate required fields
+            if (!formData.noHp || !formData.nominal || !formData.bank || !formData.jatuhTempo) {
+                alert('Mohon lengkapi semua field yang diperlukan!');
+                return;
+            }
+
+            try {
+                const { feeAdmin, feeWaktuAmount } = calculateFees(formData.nominal, formData.jatuhTempo);
+                const total = formData.nominal + feeAdmin + feeWaktuAmount;
+                const jatuhTempoDate = new Date(Date.now() + (formData.jatuhTempo * 24 * 60 * 60 * 1000));
+
+                const transactionData = {
+                    ...formData,
+                    feeAdmin,
+                    feeWaktu: feeWaktuAmount,
+                    totalBayar: total,
+                    tanggalJatuhTempo: jatuhTempoDate.toISOString(),
+                    tanggalPengajuan: new Date().toISOString()
+                };
+
+                // Save to Firestore
+                const docRef = await addDoc(collection(db, 'pengajuan'), transactionData);
+                
+                // Save to Realtime Database
+                await set(ref(rtdb, `tagihan/${formData.noHp}/${formData.timestamp}`), transactionData);
+
+                // Save user contact if name provided
+                if (formData.nama) {
+                    await set(ref(rtdb, `kontak_user/${formData.noHp}`), {
+                        nama: formData.nama,
+                        noHp: formData.noHp
+                    });
+                }
+
+                // Create WhatsApp message
+                const waMessage = `Halo admin, saya ingin mengajukan saldo:
+Nama: ${formData.nama || 'Tidak diisi'}
+No HP: ${formData.noHp}
+Nominal: ${formatCurrency(formData.nominal)}
+Bank: ${formData.bank}
+Fee waktu: ${formatCurrency(feeWaktuAmount)}
+Fee admin: ${formatCurrency(feeAdmin)}
+Total bayar: ${formatCurrency(total)}
+Kode Promo: ${formData.kodePromo}
+Terima kasih.`;
+
+                const waUrl = `https://wa.me/6289515199789?text=${encodeURIComponent(waMessage)}`;
+                window.open(waUrl, '_blank');
+
+                alert('Pengajuan berhasil dikirim! Anda akan diarahkan ke WhatsApp.');
+                document.getElementById('pengajuanForm').reset();
+                document.getElementById('summary').style.display = 'none';
+
+            } catch (error) {
+                console.error('Error saving data:', error);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        });
+
+        // Check Bills
+        document.getElementById('btnCekTagihan').addEventListener('click', async function() {
+            const hp = document.getElementById('cekHp').value.trim();
+            
+            if (!hp) {
+                alert('Masukkan nomor HP!');
+                return;
+            }
+
+            document.getElementById('tagihanLoading').style.display = 'block';
+            document.getElementById('tagihanResult').innerHTML = '';
+
+            try {
+                const tagihanRef = ref(rtdb, `tagihan/${hp}`);
+                const snapshot = await get(tagihanRef);
+
+                document.getElementById('tagihanLoading').style.display = 'none';
+
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    let html = '';
+
+                    Object.values(data).forEach(item => {
+                        const tanggalPengajuan = new Date(item.tanggalPengajuan).toLocaleDateString('id-ID');
+                        const tanggalJatuhTempo = new Date(item.tanggalJatuhTempo).toLocaleDateString('id-ID');
+                        
+                        html += `
+                            <div class="transaction-item">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h5 style="color: #e60000; margin: 0;">#${item.timestamp}</h5>
+                                    <span class="status-badge status-${item.status}">${item.status.toUpperCase()}</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                                    <div><strong>Nama:</strong> ${item.nama || 'Tidak diisi'}</div>
+                                    <div><strong>No Telepon:</strong> ${item.noHp}</div>
+                                    <div><strong>Nominal:</strong> ${formatCurrency(item.nominal)}</div>
+                                    <div><strong>Bank:</strong> ${item.bank}</div>
+                                    <div><strong>Fee Waktu:</strong> ${formatCurrency(item.feeWaktu)}</div>
+                                    <div><strong>Fee Admin:</strong> ${formatCurrency(item.feeAdmin)}</div>
+                                    <div><strong>Tanggal Pengajuan:</strong> ${tanggalPengajuan}</div>
+                                    <div><strong>Waktu Habis:</strong> ${tanggalJatuhTempo}</div>
+                                    <div style="grid-column: 1/-1;"><strong>Total Semua:</strong> ${formatCurrency(item.totalBayar)}</div>
+                                    <div style="grid-column: 1/-1;"><strong>Status Pembayaran:</strong> 
+                                        <span class="status-badge status-${item.status}">${item.status.toUpperCase()}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    document.getElementById('tagihanResult').innerHTML = html;
+                } else {
+                    document.getElementById('tagihanResult').innerHTML = `
+                        <div class="alert alert-error">
+                            <i class="fas fa-exclamation-circle"></i> 
+                            Tidak ada data tagihan untuk nomor HP ini.
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('tagihanLoading').style.display = 'none';
+                console.error('Error fetching bills:', error);
+                alert('Terjadi kesalahan saat mengambil data tagihan.');
+            }
+        });
+
+        // Copy to clipboard function
+        window.copyToClipboard = function(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Nomor ${type} berhasil disalin!`);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert(`Nomor ${type} berhasil disalin!`);
+            });
+        };
+
+        // Admin Login
+        document.getElementById('btnLogin').addEventListener('click', function() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === '10122006') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadAdminData();
+            } else {
+                alert('Password salah!');
+            }
+        });
+
+        // Admin Logout
+        document.getElementById('btnLogout').addEventListener('click', function() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminLogin').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
+        });
+
+        // Add New User
+        document.getElementById('btnAddUser').addEventListener('click', async function() {
+            const nama = document.getElementById('newUserName').value.trim();
+            const hp = document.getElementById('newUserHp').value.trim();
+
+            if (!nama || !hp) {
+                alert('Mohon lengkapi nama dan nomor HP!');
+                return;
+            }
+
+            try {
+                await set(ref(rtdb, `kontak_user/${hp}`), { nama, noHp: hp });
+                alert('Kontak berhasil disimpan!');
+                document.getElementById('newUserName').value = '';
+                document.getElementById('newUserHp').value = '';
+            } catch (error) {
+                console.error('Error saving contact:', error);
+                alert('Terjadi kesalahan saat menyimpan kontak.');
+            }
+        });
+
+        // Update Saldo
+        document.getElementById('btnUpdateSaldo').addEventListener('click', async function() {
+            const newSaldo = parseInt(document.getElementById('newSaldo').value);
+            
+            if (!newSaldo || newSaldo < 0) {
+                alert('Masukkan saldo yang valid!');
+                return;
+            }
+
+            try {
+                await set(ref(rtdb, 'admin_data/saldo'), newSaldo);
+                currentSaldo = newSaldo;
+                document.getElementById('currentSaldo').value = formatCurrency(newSaldo);
+                document.getElementById('saldoTersedia').textContent = formatCurrency(newSaldo);
+                document.getElementById('newSaldo').value = '';
+                alert('Saldo berhasil diupdate!');
+            } catch (error) {
+                console.error('Error updating saldo:', error);
+                alert('Terjadi kesalahan saat mengupdate saldo.');
+            }
+        });
+
+        // Load Admin Data
+        async function loadAdminData() {
+            document.getElementById('adminLoading').style.display = 'block';
+            
+            // Load current saldo for admin panel
+            try {
+                const saldoRef = ref(rtdb, 'admin_data/saldo');
+                const saldoSnapshot = await get(saldoRef);
+                const saldo = saldoSnapshot.exists() ? saldoSnapshot.val() : 0;
+                document.getElementById('currentSaldo').value = formatCurrency(saldo);
+            } catch (error) {
+                console.error('Error loading admin saldo:', error);
+            }
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, 'pengajuan'));
+                currentTransactions = [];
+                let totalPengajuan = 0;
+                let totalFee = 0;
+
+                querySnapshot.forEach(doc => {
+                    const data = { id: doc.id, ...doc.data() };
+                    currentTransactions.push(data);
+                    totalPengajuan += data.nominal;
+                    totalFee += (data.feeAdmin + data.feeWaktu);
+                });
+
+                document.getElementById('totalPengajuan').textContent = formatCurrency(totalPengajuan);
+                document.getElementById('totalFee').textContent = formatCurrency(totalFee);
+
+                filterTransactions();
+                
+            } catch (error) {
+                console.error('Error loading admin data:', error);
+                alert('Terjadi kesalahan saat memuat data admin.');
+            } finally {
+                document.getElementById('adminLoading').style.display = 'none';
+            }
+        }
+
+        // Filter Transactions
+        document.getElementById('statusFilter').addEventListener('change', filterTransactions);
+
+        function filterTransactions() {
+            const filter = document.getElementById('statusFilter').value;
+            const filteredTransactions = filter ? 
+                currentTransactions.filter(t => t.status === filter) : 
+                currentTransactions;
+
+            displayAdminTransactions(filteredTransactions);
+        }
+
+        // Display Admin Transactions
+        function displayAdminTransactions(transactions) {
+            let html = '';
+
+            transactions.forEach(item => {
+                const tanggalPengajuan = new Date(item.tanggalPengajuan).toLocaleDateString('id-ID');
+                const tanggalJatuhTempo = new Date(item.tanggalJatuhTempo).toLocaleDateString('id-ID');
+                
+                html += `
+                    <div class="transaction-item">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h5 style="color: #e60000; margin: 0;">#${item.timestamp}</h5>
+                            <select onchange="updateTransactionStatus('${item.id}', '${item.noHp}', '${item.timestamp}', this.value)" style="padding: 0.3rem; border-radius: 5px;">
+                                <option value="proses" ${item.status === 'proses' ? 'selected' : ''}>Proses</option>
+                                <option value="belum-bayar" ${item.status === 'belum-bayar' ? 'selected' : ''}>Belum Bayar</option>
+                                <option value="lunas" ${item.status === 'lunas' ? 'selected' : ''}>Lunas</option>
+                                <option value="tolak" ${item.status === 'tolak' ? 'selected' : ''}>Tolak</option>
+                            </select>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                            <div><strong>Nama:</strong> ${item.nama || 'Tidak diisi'}</div>
+                            <div><strong>No Telepon:</strong> 
+                                <span onclick="copyToClipboard('${item.noHp}', 'HP')" style="cursor: pointer; color: #e60000;">
+                                    ${item.noHp} <i class="fas fa-copy"></i>
+                                </span>
+                            </div>
+                            <div><strong>Bank:</strong> ${item.bank}</div>
+                            <div><strong>Saldo Diajukan:</strong> ${formatCurrency(item.nominal)}</div>
+                            <div><strong>Fee Admin + Waktu:</strong> ${formatCurrency(item.feeAdmin + item.feeWaktu)}</div>
+                            <div><strong>Tanggal Berakhir:</strong> ${tanggalJatuhTempo}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('adminTransactionList').innerHTML = html || 
+                '<div class="alert alert-error">Tidak ada transaksi ditemukan.</div>';
+        }
+
+        // Update Transaction Status
+        window.updateTransactionStatus = async function(docId, noHp, timestamp, newStatus) {
+            try {
+                // Update Firestore
+                await updateDoc(doc(db, 'pengajuan', docId), {
+                    status: newStatus
+                });
+
+                // Update Realtime Database
+                await update(ref(rtdb, `tagihan/${noHp}/${timestamp}`), {
+                    status: newStatus
+                });
+
+                // Update local data
+                const transaction = currentTransactions.find(t => t.id === docId);
+                if (transaction) {
+                    transaction.status = newStatus;
+                }
+
+                alert('Status berhasil diupdate!');
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Terjadi kesalahan saat mengupdate status.');
+            }
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DanaPengajuan app initialized');
+            loadSaldo(); // Load saldo on page load
+        });
+    </script>
+</body>
+</html>
